@@ -1,8 +1,5 @@
 # Asset Management System
 
-A simple college/internship Asset Management System built with React 19, Vite, ASP.NET Core 8 Web API, Entity Framework Core, and PostgreSQL.
-
-This project intentionally does not include authentication, authorization, login, register, JWT, Identity, roles, or user management. It is prepared as a Micro Frontend module that can later be integrated into a Host Dashboard.
 
 ## Project Structure
 
