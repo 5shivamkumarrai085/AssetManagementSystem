@@ -26,7 +26,7 @@ builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IAssignmentService, AssignmentService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
 
-// CORS (Development)
+// CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("FrontendCors", policy =>
@@ -38,6 +38,13 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+// Apply EF Core Migrations Automatically
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+}
 
 if (app.Environment.IsDevelopment())
 {
