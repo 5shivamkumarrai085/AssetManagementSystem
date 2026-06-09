@@ -15,7 +15,7 @@ export default function Layout({ children }) {
           <span className="brand-mark">AM</span>
           <div>
             <strong>Asset Management</strong>
-            <small>College Project</small>
+            
           </div>
         </div>
         <nav className="nav-links">
