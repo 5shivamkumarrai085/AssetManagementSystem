@@ -35,7 +35,7 @@
 //     </div>
 //   );
 // }
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 const links = [
   { to: "", label: "Assets", end: true },
@@ -44,15 +44,21 @@ const links = [
   { to: "assignments", label: "Assignments" }
 ];
 
-function joinPath(basePath, childPath) {
-  const normalizedBase = basePath && basePath !== "/" ? basePath.replace(/\/+$/, "") : "";
-  const normalizedChild = childPath.replace(/^\/+/, "");
-
-  if (!normalizedChild) return normalizedBase || "/";
-  return `${normalizedBase}/${normalizedChild}`;
+function getMountPath(pathname) {
+  return pathname === "/assets" || pathname.startsWith("/assets/")
+    ? "/assets"
+    : "";
 }
 
-export default function Layout({ basePath = "", children }) {
+function buildPath(mountPath, childPath) {
+  if (!childPath) return mountPath || "/";
+  return `${mountPath}/${childPath}`;
+}
+
+export default function Layout({ children }) {
+  const location = useLocation();
+  const mountPath = getMountPath(location.pathname);
+
   return (
     <div className="app-shell">
       <aside className="sidebar">
@@ -66,8 +72,8 @@ export default function Layout({ basePath = "", children }) {
         <nav className="nav-links">
           {links.map((link) => (
             <NavLink
-              key={link.to}
-              to={joinPath(basePath, link.to)}
+              key={link.label}
+              to={buildPath(mountPath, link.to)}
               end={link.end}
             >
               {link.label}
